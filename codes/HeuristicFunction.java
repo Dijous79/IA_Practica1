@@ -1,4 +1,4 @@
-package aima.search.framework;
+package codes;
 
 /**
  * @author Ravi Mohan

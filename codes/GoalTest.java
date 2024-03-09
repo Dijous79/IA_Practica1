@@ -1,4 +1,4 @@
-package aima.search.framework;
+package codes;
 
 public interface GoalTest {
 	boolean isGoalState(Object state);

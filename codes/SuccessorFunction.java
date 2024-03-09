@@ -1,4 +1,4 @@
-package aima.search.framework;
+package codes;
 
 import java.util.List;
 
