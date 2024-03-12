@@ -1,10 +1,8 @@
-
-package IA.probIA15;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import IA.probIA15.*;
 import aima.search.framework.GraphSearch;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
