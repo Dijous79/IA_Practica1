@@ -17,7 +17,7 @@ public class DFSHeuristicFunction implements HeuristicFunction {
 		DFSBoard board = (DFSBoard) state;
 		int ns = board.getNServersQueSutilitzen();
 		//osigui el size dels "contenidors" no buits
-		
+		//test
 		double mean = 0;
 		double variance = 0;
 	
