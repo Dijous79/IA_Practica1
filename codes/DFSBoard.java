@@ -3,14 +3,12 @@ package codes;
 import IA.DistFS.*;
 import aima.util.Pair;
 
-import java.util.Random;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 public class DFSBoard {
     static Servers servers;
     static Requests requests;
-    Vector<Pair>[] assignacio;
+    Set<Pair>[] assignacio;
     int[] tempsServers;
     public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
         servers = new Servers(nServers, mReps, seed);
@@ -19,15 +17,16 @@ public class DFSBoard {
 
         Random myRandom = new Random();
         myRandom.setSeed(seed);
-        assignacio = creaAssignacio(nUsers, myRandom);
+        assignacio = creaAssignacio(nServers, myRandom);
 
     }
     public DFSBoard(DFSBoard db) {
         assignacio = db.assignacio;
+        tempsServers = db.tempsServers;
     }
 
-    private Vector<Pair>[] creaAssignacio(int nU, Random rand) {
-        Vector<Pair>[] res = new Vector[nU];
+    private Set<Pair>[] creaAssignacio(int nS, Random rand) {
+        Set<Pair>[] res = new HashSet[nS];
         for(int i = 0; i < requests.size(); ++i) {
             int[] aux = requests.getRequest(i);
             Pair elem = new Pair(aux[0], aux[1]);
