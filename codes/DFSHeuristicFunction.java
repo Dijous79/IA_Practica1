@@ -30,8 +30,8 @@ public class DFSHeuristicFunction implements HeuristicFunction {
 		}
 		variance /= ns;
 		
-		//ponderadors
-		return (mean + variance);
+		double ponderador = 50.0;
+		return (ponderador*mean + variance);
 	}
 	
 	

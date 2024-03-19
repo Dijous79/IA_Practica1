@@ -30,7 +30,7 @@ public class Main {
         DFSBoard minBoard = null;
         DFSBoard maxBoard = null;
         
-        for (int i = 1; i <= 100000; i++) {
+        for (int i = 1; i <= 10000; i++) {
             DFSBoard board = new DFSBoard(6, 2, 12, 3, i);
             DFSHeuristicFunction heuristic = new DFSHeuristicFunction();
             double valor = heuristic.getHeuristicValue(board);
