@@ -10,7 +10,9 @@ public class DFSBoard {
     static Requests requests;
     Set<Pair>[] assignacio;
     int[] tempsServers;
+    int nServers;
     public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
+        this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
         requests = new Requests(nUsers, mConsults, seed);
         tempsServers = new int[nServers];
@@ -50,11 +52,11 @@ public class DFSBoard {
         System.out.println(Arrays.toString(tempsServers));
     }
 
-    public int getNServersQueSutilitzen() {
-        return 0;
+    public int getNServers() {
+        return nServers;
     }
 
-    public double getServerTotalTime(int i) {
-        return 0;
+    public int getServerTime(int i) {
+        return tempsServers[i];
     }
 }

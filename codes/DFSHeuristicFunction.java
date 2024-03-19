@@ -15,14 +15,14 @@ public class DFSHeuristicFunction implements HeuristicFunction {
 
 	public double getHeuristicValue(Object state) {
 		DFSBoard board = (DFSBoard) state;
-		int ns = board.getNServersQueSutilitzen();
+		int ns = board.getNServers();
 		//osigui el size dels "contenidors" no buits
 		
 		double mean = 0;
 		double variance = 0;
 	
 		for (int i = 0; i < ns; i++) {
-			double serverTotalTime = board.getServerTotalTime(i);
+			double serverTotalTime = board.getServerTime(i);
 			mean += serverTotalTime;
 			variance += Math.pow(serverTotalTime, 2);
 		}
