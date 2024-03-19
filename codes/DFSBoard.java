@@ -27,15 +27,34 @@ public class DFSBoard {
 
     private Set<Pair>[] creaAssignacio(int nS, Random rand) {
         Set<Pair>[] res = new HashSet[nS];
+        for (int i = 0; i < nS; i++) { // Initialize each element of res
+            res[i] = new HashSet<>();
+        }
         for(int i = 0; i < requests.size(); ++i) {
             int[] aux = requests.getRequest(i);
             Pair elem = new Pair(aux[0], aux[1]);
             Set<Integer> servs = servers.fileLocations((Integer) elem.getSecond());
-            int rn = rand.nextInt() % servs.size();
-            Integer[] servs2array = (Integer[]) servs.toArray();
+            int rn = rand.nextInt(servs.size());
+            Integer[] servs2array = servs.toArray(new Integer[servs.size()]);
             res[servs2array[rn]].add(elem);
             tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], (int) elem.getFirst());
         }
         return res;
+    }
+
+
+    public void pintaConsultes() {
+        for (int i = 0; i < assignacio.length; ++i) {
+            System.out.println("Servidor " + i + " -> " + assignacio[i]);
+        }
+        System.out.println(Arrays.toString(tempsServers));
+    }
+
+    public int getNServersQueSutilitzen() {
+        return 0;
+    }
+
+    public double getServerTotalTime(int i) {
+        return 0;
     }
 }
