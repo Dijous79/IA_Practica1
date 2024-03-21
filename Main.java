@@ -1,12 +1,14 @@
 import IA.DistFS.Servers;
 import codes.DFSBoard;
 import codes.DFSHeuristicFunction;
+import codes.DFSSuccessorFunction;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Servers.WrongParametersException {
-        /*
+
         int nS, nU, mR, mC, s;
         Scanner scn = new Scanner(System.in);
         System.out.println("input: nº of Servers:");
@@ -21,7 +23,12 @@ public class Main {
         s = scn.nextInt();
 
         DFSBoard prova = new DFSBoard(nS, mR, nU, mC, s);
-        */
+        prova.pintaConsultes();
+        DFSSuccessorFunction pepe = new DFSSuccessorFunction();
+        List<DFSBoard> llista = pepe.getSuccessors(prova);
+        System.out.print("\n\n" + llista.size() + "\n\n");
+        llista.get(0).pintaConsultes();
+        /*
         
         double minValue = Double.MAX_VALUE;
         double maxValue = Double.MIN_VALUE;
@@ -58,6 +65,6 @@ public class Main {
             System.out.println("Board for maximum i=" + maxI + ":");
             maxBoard.pintaConsultes();
         }
-
+*/
     }    
 }
