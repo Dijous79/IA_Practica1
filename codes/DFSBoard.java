@@ -23,9 +23,14 @@ public class DFSBoard {
 
     }
     public DFSBoard(DFSBoard db) {
-        assignacio = db.assignacio;
-        tempsServers = db.tempsServers;
+        this.assignacio = new HashSet[db.assignacio.length];
+        for (int i = 0; i < db.assignacio.length; i++) {
+            this.assignacio[i] = new HashSet<>(db.assignacio[i]);
+        }
+        this.tempsServers = Arrays.copyOf(db.tempsServers, db.tempsServers.length);
+        this.nServers = db.nServers;
     }
+
 
     private Set<Pair>[] creaAssignacio(int nS, Random rand) {
         Set<Pair>[] res = new HashSet[nS];
@@ -58,5 +63,18 @@ public class DFSBoard {
 
     public int getServerTime(int i) {
         return tempsServers[i];
+    }
+    
+    public Set<Pair> getServerQueries(int serv) { return assignacio[serv]; }
+
+    public void moveQuery(int origen, Pair uf, int dest) {
+        assignacio[origen].remove(uf);
+        tempsServers[origen] -= servers.tranmissionTime(origen, (Integer) uf.getFirst());
+        assignacio[dest].add(uf);
+        tempsServers[dest] += servers.tranmissionTime(dest, (Integer) uf.getFirst());
+    }
+
+    public Set<Integer> Servers2Transmit(int n) {
+        return servers.fileLocations(n);
     }
 }
