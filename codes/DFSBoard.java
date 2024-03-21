@@ -59,4 +59,9 @@ public class DFSBoard {
     public int getServerTime(int i) {
         return tempsServers[i];
     }
+    public Set<Pair> getServerQueries(int serv) { return assignacio[serv]; }
+    public void moveQuery(int origen, Pair uf, int dest) {
+        assignacio[origen].remove(uf);
+        assignacio[dest].add(uf);
+    }
 }
