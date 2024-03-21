@@ -6,11 +6,11 @@ import aima.util.Pair;
 import java.util.*;
 
 public class DFSBoard {
-    static Servers servers;
-    static Requests requests;
-    Set<Pair>[] assignacio;
-    int[] tempsServers;
-    int nServers;
+    public static Servers servers;
+    public static Requests requests;
+    private Set<Pair>[] assignacio;
+    private int[] tempsServers;
+    private int nServers;
     public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
         this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
@@ -63,6 +63,10 @@ public class DFSBoard {
 
     public int getServerTime(int i) {
         return tempsServers[i];
+    }
+
+    public Set<Pair>[] getAssignacio() {
+        return assignacio;
     }
     
     public Set<Pair> getServerQueries(int serv) { return assignacio[serv]; }

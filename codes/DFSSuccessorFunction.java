@@ -15,8 +15,8 @@ public class DFSSuccessorFunction implements SuccessorFunction {
         DFSBoard board = (DFSBoard) state;
         List<DFSBoard> ret = new ArrayList<>();
 
-        for (int i = 0; i < board.assignacio.length; ++i) {
-            Set<Pair> queries = new HashSet<>(board.assignacio[i]); // Create a copy of the set
+        for (int i = 0; i < board.getAssignacio().length; ++i) {
+            Set<Pair> queries = new HashSet<>(board.getServerQueries(i)); // Create a copy of the set
             for (Pair uf : queries) {
                 Set<Integer> servs = board.Servers2Transmit((Integer) uf.getSecond());
                 for (Integer n : servs) {
@@ -29,7 +29,7 @@ public class DFSSuccessorFunction implements SuccessorFunction {
                 }
             }
         }
-
+        System.out.println("un cop");
         return ret;
     }
 
