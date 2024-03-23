@@ -15,7 +15,7 @@ import aima.search.informed.SimulatedAnnealingSearch;
 public class DFADemo {
 
     public static void main(String[] args) throws Servers.WrongParametersException {
-        DFSBoard board = new DFSBoard(6, 2, 12, 3, 123);
+        DFSBoard board = new DFSBoard(20, 2, 100, 3, 123);
         DFSHillClimbingSearch(board);
         DFSSimulatedAnnealingSearch(board);
     }
@@ -28,7 +28,6 @@ public class DFADemo {
             SearchAgent agent = new SearchAgent(problem,search);
             
             System.out.println();
-            //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
             printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
         } catch (Exception e) {
