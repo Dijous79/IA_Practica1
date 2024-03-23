@@ -28,6 +28,7 @@ public class DFADemo {
             SearchAgent agent = new SearchAgent(problem,search);
             
             System.out.println();
+            //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
             printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
         } catch (Exception e) {

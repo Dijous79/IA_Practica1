@@ -46,14 +46,18 @@ public class DFSBoard {
             res[servs2array[rn]].add(elem);
             tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], (int) elem.getFirst());
         }
+
         return res;
     }
 
 
     public void pintaConsultes() {
+        //int s= 0;
         for (int i = 0; i < assignacio.length; ++i) {
             System.out.println("Servidor " + i + " -> " + assignacio[i]);
+            //s+=assignacio[i].size();
         }
+        //System.out.println(s);
         System.out.println(Arrays.toString(tempsServers));
     }
 
