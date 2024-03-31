@@ -24,15 +24,19 @@ public class DFADemo {
         System.out.println("\nDFA HillClimbing  -->");
         try {
             long startTime = System.nanoTime();
-            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunctionCriteri1());
+            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction());
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
             long endTime = System.nanoTime();
             System.out.println();
             System.out.println("Time: " + (endTime - startTime) / 1000000 + "ms");
             System.out.println();
-            printActions(agent.getActions());
+            //printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
+
+            DFSBoard boardFinal = (DFSBoard) search.getGoalState();
+            boardFinal.pintaConsultes();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
