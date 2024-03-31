@@ -11,16 +11,20 @@ public class DFSBoard {
     private int[] assignacio;
     private int[] tempsServers;
     private int nServers;
-    public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
+    public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed, int type) throws Servers.WrongParametersException {
         this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
         requests = new Requests(nUsers, mConsults, seed);
         tempsServers = new int[nServers];
         assignacio = new int[requests.size()];
-
-        Random myRandom = new Random();
-        myRandom.setSeed(seed);
-        creaAssignacio(nUsers, myRandom);
+        switch (type) {
+            case 1:
+                Random myRandom = new Random();
+                myRandom.setSeed(seed);
+                creaAssignacioRand(nUsers, myRandom);
+            case 2:
+                creaAssignacioGreedy(nUsers);
+        }
     }
     public DFSBoard(DFSBoard db) {
         this.assignacio = Arrays.copyOf(db.assignacio, db.assignacio.length);
@@ -29,7 +33,7 @@ public class DFSBoard {
     }
 
 
-    private void creaAssignacio(int nU, Random rand) {
+    private void creaAssignacioRand(int nU, Random rand) {
         Arrays.fill(tempsServers, 0);
         for(int i = 0; i < requests.size(); ++i) {
             int[] aux = requests.getRequest(i);
@@ -38,6 +42,24 @@ public class DFSBoard {
             Integer[] servs2array = servs.toArray(new Integer[servs.size()]);
             assignacio[i] = servs2array[rn];
             tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], aux[0]);
+        }
+    }
+
+    private void creaAssignacioGreedy(int nU) {
+        Arrays.fill(tempsServers, 0);
+        for(int i = 0; i < requests.size(); ++i) {
+            int[] aux = requests.getRequest(i);
+            Set<Integer> servs = servers.fileLocations(aux[1]);
+            int min = Integer.MAX_VALUE;
+            int minServ = -1;
+            for (Integer s : servs) {
+                if (tempsServers[s] < min) {
+                    min = tempsServers[s];
+                    minServ = s;
+                }
+            }
+            assignacio[i] = minServ;
+            tempsServers[minServ] += servers.tranmissionTime(minServ, aux[0]);
         }
     }
 
