@@ -33,7 +33,7 @@ public class DFADemo {
         System.out.println("\nDFA HillClimbing  -->");
         try {
             long startTime = System.nanoTime();
-            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunctionCriteri1());
+            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction2());
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
             long endTime = System.nanoTime();
@@ -44,13 +44,13 @@ public class DFADemo {
             printInstrumentation(agent.getInstrumentation());
 
             DFSBoard boardFinal = (DFSBoard) search.getGoalState();
-            DFSHeuristicFunctionCriteri1 h = new DFSHeuristicFunctionCriteri1();
+            DFSHeuristicFunction2 h = new DFSHeuristicFunction2();
             System.out.println("El valor de la heurística per a la solució final és: " + h.getHeuristicValue(boardFinal));
             int m = boardFinal.getTempsMax();
             System.out.println("El temps de transmisió total és: " + boardFinal.getTemosTotal() + " i el temps màxim és: " + m + "\n");
-            //if (millorMaxim > m)
-                //millorMaxim = m;
-            boardFinal.pintaConsultes();
+            if (millorMaxim > m)
+                millorMaxim = m;
+            //boardFinal.pintaConsultes();
 
         } catch (Exception e) {
             e.printStackTrace();
