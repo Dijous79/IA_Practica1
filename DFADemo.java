@@ -39,6 +39,8 @@ public class DFADemo {
 
             DFSBoard boardFinal = (DFSBoard) search.getGoalState();
             boardFinal.pintaConsultes();
+            DFSHeuristicFunction h = new DFSHeuristicFunction();
+            System.out.println(h.getHeuristicValue(boardFinal));
 
         } catch (Exception e) {
             e.printStackTrace();

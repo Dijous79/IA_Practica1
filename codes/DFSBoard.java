@@ -22,8 +22,10 @@ public class DFSBoard {
                 Random myRandom = new Random();
                 myRandom.setSeed(seed);
                 creaAssignacioRand(nUsers, myRandom);
+                break;
             case 2:
                 creaAssignacioGreedy(nUsers);
+                break;
         }
     }
     public DFSBoard(DFSBoard db) {
