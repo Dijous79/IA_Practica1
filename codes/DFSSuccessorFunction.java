@@ -1,9 +1,6 @@
 package codes;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
@@ -16,12 +13,12 @@ public class DFSSuccessorFunction implements SuccessorFunction {
         List<Successor> ret = new ArrayList<>();
 
         for (int i = 0; i < board.getAssignacio().length; ++i) {
-            Pair act = board.getConsulta(i);
-            Integer[] servs = board.getServers4Fitxers((Integer) act.getSecond());
+            int[] act = board.getConsulta(i);
+            Integer[] servs = board.getServers4Fitxers(act[1]);
             for (Integer s : servs) {
                 DFSBoard nextSuccesor = new DFSBoard(board);
                 nextSuccesor.moveQuery(i, s);
-                String nom = act.toString() + " -> " + s.toString();
+                String nom = Arrays.toString(act) + " -> " + s.toString();
                 ret.add(new Successor(nom, nextSuccesor));
             }
         }

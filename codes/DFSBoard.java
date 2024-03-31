@@ -10,14 +10,12 @@ public class DFSBoard {
     private static Requests requests;
     private int[] assignacio;
     private int[] tempsServers;
-    private static Pair[] dataUsersFitxers;
     private int nServers;
     public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
         this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
         requests = new Requests(nUsers, mConsults, seed);
         tempsServers = new int[nServers];
-        dataUsersFitxers = new Pair[requests.size()];
         assignacio = new int[requests.size()];
 
         Random myRandom = new Random();
@@ -35,13 +33,11 @@ public class DFSBoard {
         Arrays.fill(tempsServers, 0);
         for(int i = 0; i < requests.size(); ++i) {
             int[] aux = requests.getRequest(i);
-            Pair elem = new Pair(aux[0], aux[1]);
-            dataUsersFitxers[i] = elem;
-            Set<Integer> servs = servers.fileLocations((Integer) elem.getSecond());
+            Set<Integer> servs = servers.fileLocations(aux[1]);
             int rn = rand.nextInt(servs.size());
             Integer[] servs2array = servs.toArray(new Integer[servs.size()]);
             assignacio[i] = servs2array[rn];
-            tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], (int) elem.getFirst());
+            tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], aux[0]);
         }
     }
 
@@ -49,7 +45,7 @@ public class DFSBoard {
     public void pintaConsultes() {
         //int s= 0;
         for (int i = 0; i < assignacio.length; ++i) {
-            System.out.println("Consulta: " + dataUsersFitxers[i] + " Es fa al servidor -> " + assignacio[i]);
+            System.out.println("Consulta: " + Arrays.toString(requests.getRequest(i)) + " Es fa al servidor -> " + assignacio[i]);
         }
         System.out.println(Arrays.toString(tempsServers));
     }
@@ -65,9 +61,8 @@ public class DFSBoard {
     public int[] getAssignacio() {
         return assignacio;
     }
-    
-    public Pair[] getDataUsersFitxers(int serv) { return dataUsersFitxers; }
-    public Pair getConsulta(int n) { return dataUsersFitxers[n]; }
+
+    public int[] getConsulta(int n) { return requests.getRequest(n); }
     public Integer[] getServers4Fitxers(int f) {
         Set<Integer> servs = servers.fileLocations(f);
         return servs.toArray(new Integer[0]);
@@ -76,8 +71,8 @@ public class DFSBoard {
     public void moveQuery(int pairPos, int server) {
         int origen = assignacio[pairPos];
         assignacio[pairPos] = server;
-        tempsServers[origen] -= servers.tranmissionTime(origen, (Integer) dataUsersFitxers[pairPos].getFirst());
-        tempsServers[server] += servers.tranmissionTime(server, (Integer) dataUsersFitxers[pairPos].getFirst());
+        tempsServers[origen] -= servers.tranmissionTime(origen, requests.getRequest(pairPos)[0]);
+        tempsServers[server] += servers.tranmissionTime(server, requests.getRequest(pairPos)[0]);
     }
 
     public Set<Integer> Servers2Transmit(int n) {
