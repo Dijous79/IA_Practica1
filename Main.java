@@ -31,7 +31,7 @@ public class Main {
         DFSBoard maxBoard = null;
         
         for (int i = 1; i <= 10000; i++) {
-            DFSBoard board = new DFSBoard(6, 2, 12, 3, i);
+            DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234);
             DFSHeuristicFunction heuristic = new DFSHeuristicFunction();
             double valor = heuristic.getHeuristicValue(board);
             

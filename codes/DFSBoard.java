@@ -85,4 +85,10 @@ public class DFSBoard {
     public Set<Integer> Servers2Transmit(int n) {
         return servers.fileLocations(n);
     }
+
+    public static void printAssignacio(Set<Pair>[] assignacio) {
+        for (int i = 0; i < assignacio.length; ++i) {
+            System.out.println("Servidor " + i + " -> " + assignacio[i]);
+        }
+    }
 }

@@ -15,21 +15,24 @@ import aima.search.informed.SimulatedAnnealingSearch;
 public class DFADemo {
 
     public static void main(String[] args) throws Servers.WrongParametersException {
-        DFSBoard board = new DFSBoard(20, 2, 100, 3, 123);
+        DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234);
         DFSHillClimbingSearch(board);
-        DFSSimulatedAnnealingSearch(board);
+        //DFSSimulatedAnnealingSearch(board);
     }
 
     private static void DFSHillClimbingSearch(DFSBoard board) {
         System.out.println("\nDFA HillClimbing  -->");
         try {
+
             Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction());
+            board.pintaConsultes();
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
-            
+
             System.out.println();
-            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
+            board.pintaConsultes();
+            //printActions(agent.getActions());
+            //printInstrumentation(agent.getInstrumentation());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,6 +69,10 @@ public class DFADemo {
             String action = (String) actions.get(i);
             System.out.println(action);
         }
+    }
+
+    private static void printResults(DFSBoard board) {
+        board.pintaConsultes();
     }
     
 }
