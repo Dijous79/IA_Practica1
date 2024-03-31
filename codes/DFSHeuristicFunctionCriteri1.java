@@ -1,0 +1,29 @@
+package codes;
+
+import aima.search.framework.HeuristicFunction;
+
+public class DFSHeuristicFunctionCriteri1 implements HeuristicFunction {
+
+	public boolean equals(Object obj) {
+		boolean retValue;
+		
+		retValue = super.equals(obj);
+		return retValue;
+	}
+
+	public double getHeuristicValue(Object state) {
+		DFSBoard board = (DFSBoard) state;
+		int ns = board.getNServers();
+		
+		double max = 0;
+		for (int i = 0; i < ns; i++) {
+			int aux = board.getServerTime(i);
+			if (aux > max) max = aux;
+		}
+
+		return (max);
+	}
+	
+	
+
+}
