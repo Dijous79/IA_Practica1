@@ -16,27 +16,16 @@ public class DFSSuccessorFunction implements SuccessorFunction {
         List<Successor> ret = new ArrayList<>();
 
         for (int i = 0; i < board.getAssignacio().length; ++i) {
-
-            Set<Pair> queries = new HashSet<>(board.getServerQueries(i)); // Create a copy of the set
-            for (Pair uf : queries) {
-                Set<Integer> servs = board.Servers2Transmit((Integer) uf.getSecond());
-                for (Integer n : servs) {
-                    //System.out.println(uf + " -> " + n);
-                    if (n != i) {
-                        DFSBoard newSuccessor = new DFSBoard(board);
-                        newSuccessor.moveQuery(i, uf, n);
-                        String s = uf + " -> " + n;
-                        ret.add(new Successor(s, newSuccessor));
-                    }
-                }
+            Pair act = board.getConsulta(i);
+            Integer[] servs = board.getServers4Fitxers((Integer) act.getSecond());
+            for (Integer s : servs) {
+                DFSBoard nextSuccesor = new DFSBoard(board);
+                nextSuccesor.moveQuery(i, s);
+                String nom = act.toString() + " -> " + s.toString();
+                ret.add(new Successor(nom, nextSuccesor));
             }
         }
-        //System.out.println(ret.size());
-        /*for(DFSBoard b : ret) {
-            b.pintaConsultes();
-        }*/
 
-        //System.out.println("un cop");
         return ret;
     }
 

@@ -6,58 +6,51 @@ import aima.util.Pair;
 import java.util.*;
 
 public class DFSBoard {
-    public static Servers servers;
-    public static Requests requests;
-    private Set<Pair>[] assignacio;
+    private static Servers servers;
+    private static Requests requests;
+    private int[] assignacio;
     private int[] tempsServers;
+    private static Pair[] dataUsersFitxers;
     private int nServers;
     public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
         this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
         requests = new Requests(nUsers, mConsults, seed);
         tempsServers = new int[nServers];
+        dataUsersFitxers = new Pair[requests.size()];
+        assignacio = new int[requests.size()];
 
         Random myRandom = new Random();
         myRandom.setSeed(seed);
-        assignacio = creaAssignacio(nServers, myRandom);
-
+        creaAssignacio(nUsers, myRandom);
     }
     public DFSBoard(DFSBoard db) {
-        this.assignacio = new HashSet[db.assignacio.length];
-        for (int i = 0; i < db.assignacio.length; i++) {
-            this.assignacio[i] = new HashSet<>(db.assignacio[i]);
-        }
+        this.assignacio = Arrays.copyOf(db.assignacio, db.assignacio.length);
         this.tempsServers = Arrays.copyOf(db.tempsServers, db.tempsServers.length);
         this.nServers = db.nServers;
     }
 
 
-    private Set<Pair>[] creaAssignacio(int nS, Random rand) {
-        Set<Pair>[] res = new HashSet[nS];
-        for (int i = 0; i < nS; i++) { // Initialize each element of res
-            res[i] = new HashSet<>();
-        }
+    private void creaAssignacio(int nU, Random rand) {
+        Arrays.fill(tempsServers, 0);
         for(int i = 0; i < requests.size(); ++i) {
             int[] aux = requests.getRequest(i);
             Pair elem = new Pair(aux[0], aux[1]);
+            dataUsersFitxers[i] = elem;
             Set<Integer> servs = servers.fileLocations((Integer) elem.getSecond());
             int rn = rand.nextInt(servs.size());
             Integer[] servs2array = servs.toArray(new Integer[servs.size()]);
-            res[servs2array[rn]].add(elem);
+            assignacio[i] = servs2array[rn];
             tempsServers[servs2array[rn]] += servers.tranmissionTime(servs2array[rn], (int) elem.getFirst());
         }
-
-        return res;
     }
 
 
     public void pintaConsultes() {
         //int s= 0;
         for (int i = 0; i < assignacio.length; ++i) {
-            System.out.println("Servidor " + i + " -> " + assignacio[i]);
-            //s+=assignacio[i].size();
+            System.out.println("Consulta: " + dataUsersFitxers[i] + " Es fa al servidor -> " + assignacio[i]);
         }
-        //System.out.println(s);
         System.out.println(Arrays.toString(tempsServers));
     }
 
@@ -69,17 +62,22 @@ public class DFSBoard {
         return tempsServers[i];
     }
 
-    public Set<Pair>[] getAssignacio() {
+    public int[] getAssignacio() {
         return assignacio;
     }
     
-    public Set<Pair> getServerQueries(int serv) { return assignacio[serv]; }
+    public Pair[] getDataUsersFitxers(int serv) { return dataUsersFitxers; }
+    public Pair getConsulta(int n) { return dataUsersFitxers[n]; }
+    public Integer[] getServers4Fitxers(int f) {
+        Set<Integer> servs = servers.fileLocations(f);
+        return servs.toArray(new Integer[0]);
+    }
 
-    public void moveQuery(int origen, Pair uf, int dest) {
-        assignacio[origen].remove(uf);
-        tempsServers[origen] -= servers.tranmissionTime(origen, (Integer) uf.getFirst());
-        assignacio[dest].add(uf);
-        tempsServers[dest] += servers.tranmissionTime(dest, (Integer) uf.getFirst());
+    public void moveQuery(int pairPos, int server) {
+        int origen = assignacio[pairPos];
+        assignacio[pairPos] = server;
+        tempsServers[origen] -= servers.tranmissionTime(origen, (Integer) dataUsersFitxers[pairPos].getFirst());
+        tempsServers[server] += servers.tranmissionTime(server, (Integer) dataUsersFitxers[pairPos].getFirst());
     }
 
     public Set<Integer> Servers2Transmit(int n) {

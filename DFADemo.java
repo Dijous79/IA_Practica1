@@ -15,9 +15,9 @@ import aima.search.informed.SimulatedAnnealingSearch;
 public class DFADemo {
 
     public static void main(String[] args) throws Servers.WrongParametersException {
-        DFSBoard board = new DFSBoard(20, 2, 100, 3, 123);
+        DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234);
         DFSHillClimbingSearch(board);
-        DFSSimulatedAnnealingSearch(board);
+        //DFSSimulatedAnnealingSearch(board);
     }
 
     private static void DFSHillClimbingSearch(DFSBoard board) {
@@ -34,7 +34,7 @@ public class DFADemo {
             e.printStackTrace();
         }
     }
-    
+
     private static void DFSSimulatedAnnealingSearch(DFSBoard board) {
         System.out.println("\nDFA Simulated Annealing  -->");
         try {
