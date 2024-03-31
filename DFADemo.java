@@ -11,14 +11,20 @@ import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
-
 public class DFADemo {
 
+    private static int millorMaxim;
     public static void main(String[] args) throws Servers.WrongParametersException {
-        DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234, 1);
-        DFSHillClimbingSearch(board);
-        System.out.println("prova2");
-        DFSBoard board2 = new DFSBoard(50, 5, 200, 5, 1234, 2);
+        millorMaxim = Integer.MAX_VALUE;
+        System.out.println("Distribució inicial Random");
+       for (int i = 0; i < 100; ++i) {
+            DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234, i);
+            System.out.println("//////" + i + "//////");
+            DFSHillClimbingSearch(board);
+        }
+        System.out.println(millorMaxim);
+        System.out.println("Distribució inicial Greedy");
+        DFSBoard board2 = new DFSBoard(50, 5, 200, 5, 1234);
         DFSHillClimbingSearch(board2);
         //DFSSimulatedAnnealingSearch(board);
     }
@@ -27,7 +33,7 @@ public class DFADemo {
         System.out.println("\nDFA HillClimbing  -->");
         try {
             long startTime = System.nanoTime();
-            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction());
+            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunctionCriteri1());
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
             long endTime = System.nanoTime();
@@ -38,9 +44,13 @@ public class DFADemo {
             printInstrumentation(agent.getInstrumentation());
 
             DFSBoard boardFinal = (DFSBoard) search.getGoalState();
+            DFSHeuristicFunctionCriteri1 h = new DFSHeuristicFunctionCriteri1();
+            System.out.println("El valor de la heurística per a la solució final és: " + h.getHeuristicValue(boardFinal));
+            int m = boardFinal.getTempsMax();
+            System.out.println("El temps de transmisió total és: " + boardFinal.getTemosTotal() + " i el temps màxim és: " + m + "\n");
+            //if (millorMaxim > m)
+                //millorMaxim = m;
             boardFinal.pintaConsultes();
-            DFSHeuristicFunction h = new DFSHeuristicFunction();
-            System.out.println(h.getHeuristicValue(boardFinal));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,7 +1,6 @@
 package codes;
 
 import IA.DistFS.*;
-import aima.util.Pair;
 
 import java.util.*;
 
@@ -11,22 +10,23 @@ public class DFSBoard {
     private int[] assignacio;
     private int[] tempsServers;
     private int nServers;
-    public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed, int type) throws Servers.WrongParametersException {
+    public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed) throws Servers.WrongParametersException {
         this.nServers = nServers;
         servers = new Servers(nServers, mReps, seed);
         requests = new Requests(nUsers, mConsults, seed);
         tempsServers = new int[nServers];
         assignacio = new int[requests.size()];
-        switch (type) {
-            case 1:
-                Random myRandom = new Random();
-                myRandom.setSeed(seed);
-                creaAssignacioRand(nUsers, myRandom);
-                break;
-            case 2:
-                creaAssignacioGreedy(nUsers);
-                break;
-        }
+        creaAssignacioGreedy(nUsers);
+    }
+    public DFSBoard(int nServers, int mReps, int nUsers, int mConsults, int seed, int seedDistribucio) throws Servers.WrongParametersException {
+        this.nServers = nServers;
+        servers = new Servers(nServers, mReps, seed);
+        requests = new Requests(nUsers, mConsults, seed);
+        tempsServers = new int[nServers];
+        assignacio = new int[requests.size()];
+        Random myRandom = new Random();
+        myRandom.setSeed(seedDistribucio);
+        creaAssignacioRand(nUsers, myRandom);
     }
     public DFSBoard(DFSBoard db) {
         this.assignacio = Arrays.copyOf(db.assignacio, db.assignacio.length);
@@ -71,7 +71,7 @@ public class DFSBoard {
         for (int i = 0; i < assignacio.length; ++i) {
             System.out.println("Consulta: " + Arrays.toString(requests.getRequest(i)) + " Es fa al servidor -> " + assignacio[i]);
         }
-        System.out.println(Arrays.toString(tempsServers));
+        System.out.println("Temps final de cada servidor: " + Arrays.toString(tempsServers));
     }
 
     public String stringTime() {
@@ -105,5 +105,21 @@ public class DFSBoard {
 
     public Set<Integer> Servers2Transmit(int n) {
         return servers.fileLocations(n);
+    }
+
+    public  int getTemosTotal() {
+        int sum = 0;
+        for (int n : tempsServers) {
+            sum += n;
+        }
+        return sum;
+    }
+    public  int getTempsMax() {
+        int m = 0;
+        for (int n:tempsServers) {
+            if (n > m)
+                m = n;
+        }
+        return m;
     }
 }

@@ -13,15 +13,10 @@ public class DFSHeuristicFunctionCriteri1 implements HeuristicFunction {
 
 	public double getHeuristicValue(Object state) {
 		DFSBoard board = (DFSBoard) state;
-		int ns = board.getNServers();
 		
-		double max = 0;
-		for (int i = 0; i < ns; i++) {
-			int aux = board.getServerTime(i);
-			if (aux > max) max = aux;
-		}
+		double max = (double) board.getTempsMax();
 
-		return (max);
+		return max;
 	}
 	
 	

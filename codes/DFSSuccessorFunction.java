@@ -17,8 +17,8 @@ public class DFSSuccessorFunction implements SuccessorFunction {
             for (Integer s : servs) {
                 DFSBoard nextSuccesor = new DFSBoard(board);
                 nextSuccesor.moveQuery(i, s);
-                String nom = Arrays.toString(act) + " -> " + s.toString();
-                ret.add(new Successor(nom, nextSuccesor));
+                //String nom = Arrays.toString(act) + " -> " + s.toString();
+                ret.add(new Successor("", nextSuccesor));
             }
 
         }
