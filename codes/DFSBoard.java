@@ -50,6 +50,10 @@ public class DFSBoard {
         System.out.println(Arrays.toString(tempsServers));
     }
 
+    public String stringTime() {
+        return Arrays.toString(tempsServers);
+    }
+
     public int getNServers() {
         return nServers;
     }

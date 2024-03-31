@@ -24,7 +24,7 @@ public class DFADemo {
         System.out.println("\nDFA HillClimbing  -->");
         try {
             long startTime = System.nanoTime();
-            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction());
+            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunctionCriteri1());
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
             long endTime = System.nanoTime();
