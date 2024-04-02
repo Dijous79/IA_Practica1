@@ -96,11 +96,26 @@ public class DFSBoard {
         return servs.toArray(new Integer[0]);
     }
 
+    public Set<Integer> getSet(int f){
+        return servers.fileLocations(f);
+    }
+
     public void moveQuery(int pairPos, int server) {
         int origen = assignacio[pairPos];
         assignacio[pairPos] = server;
         tempsServers[origen] -= servers.tranmissionTime(origen, requests.getRequest(pairPos)[0]);
         tempsServers[server] += servers.tranmissionTime(server, requests.getRequest(pairPos)[0]);
+    }
+
+    public void  swap(int i, int j) {
+        int aux = assignacio[i];
+        assignacio[i] = assignacio[j];
+        assignacio[j] = aux;
+        tempsServers[aux] -= servers.tranmissionTime(aux, requests.getRequest(i)[0]);
+        tempsServers[assignacio[i]] -= servers.tranmissionTime(assignacio[i], requests.getRequest(j)[0]);
+        tempsServers[assignacio[i]] += servers.tranmissionTime(assignacio[i], requests.getRequest(i)[0]);
+        tempsServers[aux] += servers.tranmissionTime(aux, requests.getRequest(j)[0]);
+
     }
 
     public Set<Integer> Servers2Transmit(int n) {
