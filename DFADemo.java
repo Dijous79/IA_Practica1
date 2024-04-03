@@ -14,10 +14,11 @@ import aima.search.informed.SimulatedAnnealingSearch;
 public class DFADemo {
 
     private static int millorMaxim;
+    private static int millorTemps;
     public static void main(String[] args) throws Servers.WrongParametersException {
         millorMaxim = Integer.MAX_VALUE;
         System.out.println("Distribució inicial Random");
-       for (int i = 0; i < 1; ++i) {
+       for (int i = 0; i < 100; ++i) {
             DFSBoard board = new DFSBoard(50, 5, 200, 5, 1234, i);
             System.out.println("//////" + i + "//////");
             DFSHillClimbingSearch(board);
@@ -33,14 +34,14 @@ public class DFADemo {
         System.out.println("\nDFA HillClimbing  -->");
         try {
             long startTime = System.nanoTime();
-            Problem problem =  new Problem(board,new DFSSuccessorFunction2(), new DFSGoalTest(),new DFSHeuristicFunction2());
+            Problem problem =  new Problem(board,new DFSSuccessorFunction(), new DFSGoalTest(),new DFSHeuristicFunction2());
             Search search =  new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem,search);
             long endTime = System.nanoTime();
             System.out.println();
             System.out.println("Time: " + (endTime - startTime) / 1000000 + "ms");
             System.out.println();
-            printActions(agent.getActions());
+            //printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
 
             DFSBoard boardFinal = (DFSBoard) search.getGoalState();
@@ -50,6 +51,8 @@ public class DFADemo {
             System.out.println("El temps de transmisió total és: " + boardFinal.getTemosTotal() + " i el temps màxim és: " + m + "\n");
             if (millorMaxim > m)
                 millorMaxim = m;
+            if (millorTemps > boardFinal.getTemosTotal())
+                millorTemps = boardFinal.getTemosTotal();
             //boardFinal.pintaConsultes();
 
         } catch (Exception e) {
